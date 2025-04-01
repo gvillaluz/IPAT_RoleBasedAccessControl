@@ -61,7 +61,7 @@ app.post("/api/login", (req, res) => {
         if (!await bcrypt.compare(password, user.password)) return res.status(401).json({ success: false, message: "Invalid email or password." })
 
         const token = jwt.sign(
-            { id: user.id, email: user.email },
+            { id: user.id, username: user.username, email: user.email },
             process.env.JWT_SECRET,
             { expiresIn: "1h" } 
         );
@@ -71,19 +71,37 @@ app.post("/api/login", (req, res) => {
 });
 
 app.get("/api/user/tasks", (req, res) => {  
-    const token = req.headers["authorization"];
+    const token = req.headers["authorization"].split(" ")[1];
 
     if (!token) return res.status(403).json({ success: false, message: "No token provided." })
 
     try {
-        const user = jwt.verify(token.split(" ")[1], process.env.JWT_SECRET)
+        const user = jwt.verify(token, process.env.JWT_SECRET)
 
-        db.query('SELECT * FROM tasks WHERE userID = ?', [user.id], (err, results) => {
-            if (err) return res.status(500).json({ success: false, message: "Database Error." });
-            return res.status(200).json({ success: true, message: "Tasks loaded successfully.", tasks: results });
+        db.query('SELECT * FROM tasks WHERE user_id = ?', [user.id], (err, tasks) => {
+            if (err) return res.status(400).json({ success: false, message: "Database Error." });
+            return res.status(200).json({ success: true, message: "Tasks loaded successfully.", tasks, user });
         });
     } catch (err) {
         return res.status(401).json({ success: false, message: "Token expired." })
+    }
+});
+
+app.post("/api/user/addTask", (req, res) => {
+    const { newTask, userId } = req.body;
+    const token = req.headers["authorization"].split(" ")[1];
+
+    if (!token) return res.status(403).json({ success: false, message: "No token provided." })
+
+    try {
+        db.query('INSERT INTO tasks (user_id, task) VALUES (?, ?)', [userId, newTask], (err, results) => {
+            if (err) return res.status(400).json({ success: false, message: "Failed to save task." })
+
+            const taskId = results.insertId;
+            return res.status(200).json({ success: true, taskId, message: "Item added successfully." })
+        });
+    } catch (err) {
+        return res.status(401).json({ success: false, message: "Server Error!" })
     }
 });
 
