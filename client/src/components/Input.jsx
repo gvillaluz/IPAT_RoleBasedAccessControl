@@ -11,7 +11,8 @@ const Input = ({ tasks, setTasks, userId }) => {
         try {
             const response = await addTask(newTask, userId);
             const addedTask = {
-                id: response.taskId,
+                task_id: response.taskId,
+                user_id: userId,
                 task: newTask
             }
             setTasks([...tasks, addedTask])
@@ -27,18 +28,31 @@ const Input = ({ tasks, setTasks, userId }) => {
             alignItems: "center",
             justifyContent: "space-between",
             height: "auto",
-            width: "330px",
+            width: "370px",
             margin: "30px auto 60px"
         }}
     >
         <OutlinedInput 
             value={newTask}
             sx={{
-                height: "36px"
+                height: "36px",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                border: "#ced4da",
+                width: "260px"
             }} 
             onChange={(e) => setNewTask(e.target.value)}
         />
-        <Button variant="contained" color="primary" onClick={handleAddTask}>Add Task</Button>
+        <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={handleAddTask}
+            sx={{
+                borderRadius: "5px",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.2)"
+            }}
+        >
+            Add Task
+        </Button>
     </Box>
 }
 

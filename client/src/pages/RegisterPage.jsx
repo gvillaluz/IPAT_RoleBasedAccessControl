@@ -22,7 +22,11 @@ const RegisterPage = () => {
         }
     }
 
-    return <Container>
+    return <Container
+        sx={{
+            marginTop: "30px"
+        }}
+    >
             <Box 
                 sx={
                     { 
@@ -32,7 +36,8 @@ const RegisterPage = () => {
                         width: 350,
                         border: "1px lightgray solid", 
                         padding: "40px",
-                        borderRadius: "6px"
+                        borderRadius: "6px",
+                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
                     }
                 }
             >
@@ -82,7 +87,7 @@ const RegisterPage = () => {
                         }
                     }
                 >
-                    Already have an account? <Link to="/login">Login here</Link>
+                    Already have an account? <Link to="/">Login here</Link>
                 </Typography>
                 <Typography
                     sx={

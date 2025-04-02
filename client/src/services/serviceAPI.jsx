@@ -16,7 +16,6 @@ export const registerUser = async (username, email, password) => {
 export const loginUser = async (email, password) => {
     try  {
         const response = await axios.post(`${API_URL}/login`, { email, password }, { headers: { "Content-Type": "application/json" } })
-        console.log(response.data)
         return response.data;
     } catch (err) {
         throw err;
@@ -26,9 +25,7 @@ export const loginUser = async (email, password) => {
 export const getTasks = async () => {
     try {
         const token = localStorage.getItem("token");
-        console.log(token);
         const response = await axios.get(`${API_URL}/user/tasks`, { headers: { "Authorization": `Bearer ${token}` } });
-        console.log(response.data);
         return response.data;
     } catch (err) {
         throw err;
@@ -40,6 +37,20 @@ export const addTask = async (newTask, userId) => {
         const token = localStorage.getItem("token");
         const response = await axios.post(`${API_URL}/user/addTask`, { newTask,  userId}, { headers: { "Authorization": `Bearer ${token}` } });
         return response.data;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export const editTask = async () => {
+
+}
+
+export const deleteTask = async (taskId) => {
+    try {
+        const token = localStorage.getItem("token");
+        const response = await axios.delete(`${API_URL}/user/deleteTask/${taskId}`, { headers: { "Authorization": `Bearer ${token}` } });
+        return response.data.message;
     } catch (err) {
         throw err;
     }

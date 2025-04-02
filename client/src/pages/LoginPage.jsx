@@ -22,7 +22,11 @@ const LoginPage = () => {
         }
     }
 
-    return <Container>
+    return <Container
+        sx={{
+           marginTop: "60px"
+        }}
+    >
             <Box 
                 sx={
                     { 
@@ -32,7 +36,8 @@ const LoginPage = () => {
                         width: 350,
                         border: "1px lightgray solid", 
                         padding: "40px",
-                        borderRadius: "6px"
+                        borderRadius: "6px",
+                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
                     }
                 }
             >
@@ -74,7 +79,7 @@ const LoginPage = () => {
                         }
                     }
                 >
-                    Don't have an account? <Link to="/">Register here</Link>
+                    Don't have an account? <Link to="/register">Register here</Link>
                 </Typography>
                 <Typography
                     sx={

@@ -105,6 +105,22 @@ app.post("/api/user/addTask", (req, res) => {
     }
 });
 
+app.delete("/api/user/deleteTask/:taskId", (req, res) => {
+    const { taskId } = req.params;
+    const token = req.headers["authorization"].split(" ")[1];
+
+    if (!taskId || !token) return res.status(403).json({ success: false, message: "No token or no task_id" })
+
+    try {
+        db.query('DELETE FROM tasks WHERE task_id = ?', [taskId], (err, results) => {
+            if (err) return res.status(400).json({ success: false, message: "Failed database query." });
+            return res.status(200).json({ success: true, message: "Item deleted successfully." });
+        });
+    } catch (err) {
+        return res.status(401).json({ success: false, message: "Server Error!" })
+    }
+});
+
 app.listen(5000, () => {
     console.log("Server is running in port 5000.");
 })
