@@ -98,11 +98,23 @@ app.post("/api/user/addTask", (req, res) => {
             if (err) return res.status(400).json({ success: false, message: "Failed to save task." })
 
             const taskId = results.insertId;
-            return res.status(200).json({ success: true, taskId, message: "Item added successfully." })
+            return res.status(200).json({ success: true, taskId, message: "Task added successfully." })
         });
     } catch (err) {
         return res.status(401).json({ success: false, message: "Server Error!" })
     }
+});
+
+app.put("/api/user/editTask", (req, res) => {
+    const { taskId, newValue } = req.body;
+    const token = req.headers["authorization"].split(" ")[1];
+
+    if (!taskId || !newValue|| !token) return res.status(403).json({ success: false, message: "Invalid Credentials." })
+    
+    db.query("UPDATE tasks SET task = ? WHERE task_id = ?", [newValue, taskId], (err) => {
+        if (err) return res.status(400).json({ success: false, message: "Failed to edit task." })
+        return res.status(200).json({ success: true, message: "Task updated successfully." })
+    });
 });
 
 app.delete("/api/user/deleteTask/:taskId", (req, res) => {

@@ -42,8 +42,16 @@ export const addTask = async (newTask, userId) => {
     }
 }
 
-export const editTask = async () => {
-
+export const editTask = async (taskId, newValue) => {
+    try {
+        console.log("editing task")
+        const token = localStorage.getItem("token");
+        const response = await axios.put(`${API_URL}/user/editTask`, {taskId, newValue}, {headers: { "Authorization": `Bearer ${token}` }})
+        console.log(response.data.message)
+        return response.data.message;
+    } catch (err) {
+        throw err;
+    }
 }
 
 export const deleteTask = async (taskId) => {

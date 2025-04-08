@@ -1,13 +1,14 @@
 import { Container, Box, Typography, Button } from '@mui/material';
 import { useState, useEffect } from 'react'
 import TaskList from '../components/TaskList';
-import { getTasks, deleteTask } from '../services/serviceAPI';
+import { getTasks, deleteTask, editTask } from '../services/serviceAPI';
 import { useNavigate } from 'react-router-dom';
 import Input from '../components/Input';
 
 const Dashboard = () => {
     const [tasks, setTasks] = useState([]);
     const [user, setUser] = useState({});
+    const [editTaskId, setEditTaskId] = useState(null)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -32,6 +33,21 @@ const Dashboard = () => {
         } catch (err) {
             console.log(err.message)   
         }
+    }
+
+    const handleEdit = async (taskId, newValue) => {
+        try {
+            const response = await editTask(taskId, newValue);
+            const updatedTask = tasks.map(task => (
+                task.task_id === taskId ? { ...task, task: newValue } : task
+            ))
+
+            setTasks(updatedTask)
+
+        } catch (err) {
+            console.log(err)
+        }
+        setEditTaskId(null)
     }
 
     const handleLogout = () => {
@@ -83,7 +99,7 @@ const Dashboard = () => {
             }
         >  
             <Input tasks={tasks} setTasks={setTasks} userId={user.id} />
-            <TaskList tasks={tasks} onDelete={handleDelete} />
+            <TaskList tasks={tasks} onEdit={handleEdit} editTaskId={editTaskId} setEditTaskId={setEditTaskId} onDelete={handleDelete} />
         </Box>
     </Container>
 }
