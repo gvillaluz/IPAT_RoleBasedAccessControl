@@ -24,7 +24,7 @@ const RegisterPage = () => {
 
     return <Container
         sx={{
-            marginTop: "30px"
+            marginTop: "70px"
         }}
     >
             <Box 

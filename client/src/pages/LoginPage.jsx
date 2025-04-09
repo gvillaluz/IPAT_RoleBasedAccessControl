@@ -24,7 +24,7 @@ const LoginPage = () => {
 
     return <Container
         sx={{
-           marginTop: "60px"
+           marginTop: "95px"
         }}
     >
             <Box 
@@ -92,7 +92,7 @@ const LoginPage = () => {
                     {error}
                 </Typography>
         </Box>
-        </Container>
+    </Container>
 }
 
 export default LoginPage;
