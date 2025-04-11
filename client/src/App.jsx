@@ -4,16 +4,17 @@ import RegisterPage from './pages/RegisterPage'
 import LoginPage from './pages/LoginPage'
 import Dashboard from './pages/Dashboard'
 import './App.css'
+import ProtectedRoute from './pages/ProtectedRoute'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <Router>
       <Routes>
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/' element={<LoginPage />} />
-        <Route path='/user/dashboard' element={<Dashboard />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path='/user/dashboard' element={<Dashboard />} />
+        </Route>
       </Routes>
     </Router>
   )

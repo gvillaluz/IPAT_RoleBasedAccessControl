@@ -55,7 +55,11 @@ const Dashboard = () => {
         navigate("/");
     }
 
-    return <Container>
+    return <Container
+        sx={{
+            marginTop: "50px"
+        }}
+    >
         <Box
             sx={{
                 display: "flex",

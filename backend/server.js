@@ -29,7 +29,7 @@ db.getConnection((err) => {
 app.post("/api/register", (req, res) => {
     const { username, email, password } = req.body;
 
-    if (!username || !email || !password) return res.status(400).json({ success: false, message: "All fields are required."});
+    if (!username || !email || !password ) return res.status(400).json({ success: false, message: "All fields are required."});
 
     db.query('SELECT EXISTS(SELECT 1 FROM users WHERE email = ?) AS userExists', [email], async (err, results) => {
         if (err) return res.status(500).json({ message: "Database Error." });
@@ -61,7 +61,11 @@ app.post("/api/login", (req, res) => {
         if (!await bcrypt.compare(password, user.password)) return res.status(401).json({ success: false, message: "Invalid email or password." })
 
         const token = jwt.sign(
-            { id: user.id, username: user.username, email: user.email },
+            { 
+                id: user.id, 
+                username: user.username, 
+                email: user.email
+            },
             process.env.JWT_SECRET,
             { expiresIn: "1h" } 
         );
