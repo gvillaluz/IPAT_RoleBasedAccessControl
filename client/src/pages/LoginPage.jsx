@@ -15,7 +15,8 @@ const LoginPage = () => {
             const response = await loginUser(email, password);
             if (response.success) {
                 localStorage.setItem("token", response.token)
-                navigate("/user/dashboard");
+                localStorage.setItem("role", response.role)
+                navigate(`/admin-dashboard`);
             }
         } catch (err) {
             setError(err.response.data.message);

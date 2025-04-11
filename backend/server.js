@@ -14,7 +14,7 @@ const db = mysql.createPool(
         host: 'localhost',
         user: 'root',
         password: '',
-        database: 'user_information',
+        database: 'user_information_db',
         waitForConnections: true,
         connectionLimit: 10,
         queueLimit: 0
@@ -27,18 +27,18 @@ db.getConnection((err) => {
 });
 
 app.post("/api/register", (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
 
-    if (!username || !email || !password ) return res.status(400).json({ success: false, message: "All fields are required."});
+    if (!username || !email || !password || !role) return res.status(400).json({ success: false, message: "All fields are required."});
 
-    db.query('SELECT EXISTS(SELECT 1 FROM users WHERE email = ?) AS userExists', [email], async (err, results) => {
+    db.query('SELECT EXISTS(SELECT 1 FROM user WHERE email = ?) AS userExists', [email], async (err, results) => {
         if (err) return res.status(500).json({ message: "Database Error." });
 
         if (results[0].userExists === 1) return res.status(409).json({ success: false, message: "Email already in use." });
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        db.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hashedPassword], (err) => {
+        db.query('INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, ?)', [username, email, hashedPassword, role], (err) => {
             if (err) res.status(500).json({ success: false, message: "Registration Failed." });
 
             return res.status(201).json({ success: true, message: "User Registered Successfully." });
@@ -51,7 +51,7 @@ app.post("/api/login", (req, res) => {
 
     if (!email || !password) return res.status(400).json({ success: false, message: "All fields are required." });
 
-    db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
+    db.query('SELECT * FROM user WHERE email = ?', [email], async (err, results) => {
         if (err) return res.status(500).json({ success: false, message: "Database Error." });
 
         if (results.length === 0) return res.status(401).json({ success: false, message: "Invalid email or password." })
@@ -64,13 +64,14 @@ app.post("/api/login", (req, res) => {
             { 
                 id: user.id, 
                 username: user.username, 
-                email: user.email
+                email: user.email,
+                role: user.role
             },
             process.env.JWT_SECRET,
             { expiresIn: "1h" } 
         );
 
-        return res.status(200).json({ success: true, message: "Login successful.", token })
+        return res.status(200).json({ success: true, message: "Login successful.", token, role: user.role })
     })
 });
 

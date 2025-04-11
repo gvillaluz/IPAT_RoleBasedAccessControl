@@ -7,7 +7,8 @@ const RegisterPage = () => {
     const [user, setUser] = useState({
         username: "",
         email: "",
-        password: ""
+        password: "", 
+        role: "Crew"
     });
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ const RegisterPage = () => {
 
     const handleRegistration = async () => {
         try {
-            const results =  await registerUser(user.username, user.email, user.password);
+            const results =  await registerUser(user.username, user.email, user.password, user.role);
             if (results.success) {
                 alert("Registration successful! Proceed to login?");
                 navigate("/");
@@ -86,6 +87,19 @@ const RegisterPage = () => {
                 required  
                 onChange={handleAddFormValue} 
             />
+            <FormControl variant='outlined'>
+                <InputLabel id='inputRole'>Role:</InputLabel>
+                <Select 
+                    name='role' 
+                    label='Role:'
+                    onChange={handleAddFormValue}
+                >
+                    <MenuItem value='Admin'>Admin</MenuItem>
+                    <MenuItem value='Manager'>Manager</MenuItem>
+                    <MenuItem value='Crew'>Crew</MenuItem>
+                    <MenuItem value='Staff'>Staff</MenuItem>
+                </Select>
+            </FormControl>
             <Button type="submit" variant="contained" color="primary" onClick={handleRegistration}>
                 Register
             </Button>

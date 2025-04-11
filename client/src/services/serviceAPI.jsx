@@ -2,9 +2,9 @@ import axios from 'axios'
 
 const API_URL = "http://localhost:5000/api";
 
-export const registerUser = async (username, email, password) => {
+export const registerUser = async (username, email, password, role) => {
     try {
-        const response = await axios.post(`${API_URL}/register`, { username, email, password }, { headers: { "Content-Type": "application/json" } })
+        const response = await axios.post(`${API_URL}/register`, { username, email, password, role }, { headers: { "Content-Type": "application/json" } })
         return response.data;
     } catch (err) {
         throw err;
