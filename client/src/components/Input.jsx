@@ -37,7 +37,8 @@ const Input = ({ tasks, setTasks, userId }) => {
             sx={{
                 height: "36px",
                 boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
-                border: "#ced4da",
+                backgroundColor: "#AC94F4",
+                border: "#D1D5DB",
                 width: "260px"
             }} 
             onChange={(e) => setNewTask(e.target.value)}

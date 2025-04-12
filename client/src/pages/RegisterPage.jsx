@@ -33,7 +33,7 @@ const RegisterPage = () => {
 
     return <Container
         sx={{
-            marginTop: "70px"
+            marginTop: "40px"
         }}
     >
         <Box 
@@ -46,7 +46,8 @@ const RegisterPage = () => {
                     border: "1px lightgray solid", 
                     padding: "40px",
                     borderRadius: "6px",
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    backgroundColor: "#AC94F4"
                 }
             }
         >

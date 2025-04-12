@@ -16,8 +16,13 @@ const EditTask = ({ task, onEdit, setEditTaskId }) => {
                     padding: "15px",
                     border: "1px solid #ddd",
                     transition: "opacity .2s ease-in-out",
-                    backgroundColor: "#f9f9f9",
-                    "&:hover": { backgroundColor: "#e3f2fd" }
+                    backgroundColor: "#AC94F4",
+                    marginBottom: "10px",
+                    borderRadius: "10px",
+                    "&:hover": { 
+                        backgroundColor: "#e3f2fd",
+                        transition: ".2s ease-in-out"
+                    }
                 }}
             >
                 <TextField 

@@ -57,7 +57,7 @@ const Dashboard = () => {
 
     return <Container
         sx={{
-            marginTop: "50px"
+            margin: "30px auto"
         }}
     >
         <Box
@@ -72,7 +72,7 @@ const Dashboard = () => {
                 variant='h4'
                 sx={
                     {
-                        color: "black",
+                        color: "white",
                         fontSize: "35px"
                     }
                 }
@@ -80,12 +80,32 @@ const Dashboard = () => {
                 Welcome! {user.username}
             </Typography>
             <Button
-                color="error"
+                color="secondary"
                 variant='contained'
                 onClick={handleLogout}
             >
                 Logout
             </Button>
+        </Box>
+        <Box
+            sx={{
+                display: "flex",
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                margin: "auto 25px"
+            }}
+        >
+            <Typography
+                variant='h6'
+                sx={
+                    {
+                        color: "white",
+                        fontSize: "25px"
+                    }
+                }
+            >
+                Position: {user.role}
+            </Typography>
         </Box>
         <Box 
             sx={
@@ -94,11 +114,11 @@ const Dashboard = () => {
                     flexDirection: "column", 
                     gap: 2, 
                     width: 600,
-                    border: "1px lightgray solid", 
                     padding: "30px 80px 80px",
                     margin: "25px",
                     borderRadius: "6px",
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                    boxShadow: "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;",
+                    backgroundColor: "#371F76"
                 }
             }
         >  

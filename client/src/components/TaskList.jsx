@@ -21,7 +21,7 @@ const TaskList = ({ tasks, onEdit, editTaskId, setEditTaskId, onDelete }) => {
                 <Typography
                     sx={
                         {
-                            color: "black",
+                            color: "white",
                             fontSize: "20px"
                         }
                     }
