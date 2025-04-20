@@ -16,7 +16,7 @@ const LoginPage = () => {
             if (response.success) {
                 localStorage.setItem("token", response.token)
                 localStorage.setItem("role", response.role)
-                navigate(`/admin-dashboard`);
+                navigate(`/admin`);
             }
         } catch (err) {
             setError(err.response.data.message);

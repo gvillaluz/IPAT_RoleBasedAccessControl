@@ -2,13 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Dashboard from './Dashboard'
 
-const ManagerDashboard = () => {
+const Santos = () => {
     const [role, setRole] = useState("")
     const navigate = useNavigate()
 
     useEffect(() => {
         const role = localStorage.getItem("role");
-        if (role !== "Manager") return navigate("/staff-dashboard")
+        if (role !== "Manager") return navigate("/staff")
 
         setRole(role)
     }, []);
@@ -16,4 +16,4 @@ const ManagerDashboard = () => {
     return <Dashboard />
 }
 
-export default ManagerDashboard;
+export default Santos;
